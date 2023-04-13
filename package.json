@@ -1,0 +1,22 @@
+{
+  "name": "pecode_test",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.32.3",
+    "allure-playwright": "^2.1.0"
+  },
+  "scripts": {
+    "allure:open": "allure generate allure-results --clean && allure open",
+    "test:report": "yarn playwright show-report",
+    "test:run": "yarn playwright test"
+  },
+  "dependencies": {
+    "chai": "^4.3.7",
+    "chai-url": "^1.0.4",
+    "dotenv": "^16.0.3",
+    "mocha": "^10.2.0",
+    "playwright-core": "^1.32.3"
+  }
+}
