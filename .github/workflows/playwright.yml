@@ -22,6 +22,6 @@ jobs:
     - uses: actions/upload-artifact@v3
       if: always()
       with:
-        name: test-reports
-        path: ['allure-report/', 'playwright-report/']
+        name: allure-report
+        path: allure-report/
         retention-days: 30
