@@ -6,3 +6,4 @@ package-lock.json
 /allure-report/
 /allure-results/
 .idea
+yarn.lock
