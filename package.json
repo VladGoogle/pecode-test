@@ -9,7 +9,7 @@
   },
   "scripts": {
     "allure:open": "allure generate allure-results --clean && allure open",
-    "test:report": "yarn playwright show-report",
+    "html:open": "yarn playwright show-report",
     "test:run": "yarn playwright test"
   },
   "dependencies": {

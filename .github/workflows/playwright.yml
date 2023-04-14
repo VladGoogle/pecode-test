@@ -15,10 +15,10 @@ jobs:
         node-version: 19
     - name: Install dependencies
       run: yarn
-    - name: Install Playwright Browsers
+    - name: Install Chromium
       run: yarn playwright install chromium
     - name: Run Playwright tests
-      run: yarn playwright test
+      run: yarn test:run
     - uses: actions/upload-artifact@v3
       if: always()
       with:
