@@ -32,7 +32,7 @@ test.describe('Sort products by price ascending and descending', async() => {
         const headerPage = new HeaderPage(page)
         const filterPage = new FilterPage(page)
         await headerPage.searchProducts('Lenovo')
-        await page.locator('a.show-more').waitFor({state: 'visible'})
+        await filterPage.showMoreButton.waitFor({state: 'visible'})
         await delay(1000)
     })
 
@@ -43,7 +43,7 @@ test.describe('Sort products by price ascending and descending', async() => {
         await expect(filterPage.selectedSortingSelector).toBeVisible().then(async ()=>{
             await filterPage.selectedSortingSelector.selectOption({value: '2: expensive'})
         })
-        await page.locator('a.show-more').waitFor({state: 'visible'})
+        await filterPage.showMoreButton.waitFor({state: 'visible'})
         await delay(1000)
         const productPrices = await page.locator('.goods-tile__price-value').allInnerTexts().then((arr)=>{
             return arr.map((item)=>{
@@ -60,7 +60,7 @@ test.describe('Sort products by price ascending and descending', async() => {
         await expect(filterPage.selectedSortingSelector).toBeEnabled().then(async () => {
             await filterPage.selectedSortingSelector.selectOption({value: '1: cheap'})
         })
-        await page.locator('a.show-more').waitFor({state: 'visible'})
+        await filterPage.showMoreButton.waitFor({state: 'visible'})
         await delay(1000)
         const productPrices = await page.locator('.goods-tile__price-value').allInnerTexts().then((arr) => {
             return arr.map((item) => {

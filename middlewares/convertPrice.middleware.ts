@@ -1,5 +1,5 @@
 import {Locator} from "@playwright/test";
 
-export async function parsePrice(elem: Locator) {
-    return parseFloat((await elem.textContent()).replace(/\s/g, ''))
+export async function parsePrice(elem: string) {
+    return parseFloat(elem.replace(/\s/g, ''))
 }

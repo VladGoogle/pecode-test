@@ -32,23 +32,24 @@ test.describe('Add items to the basket', async() => {
         const headerPage = new HeaderPage(page)
         const filterPage = new FilterPage(page)
         await headerPage.searchProducts('Lenovo')
-        await page.locator('a.show-more').waitFor({state: 'visible'})
+        await filterPage.showMoreButton.waitFor({state: 'visible'})
         await delay(1000)
     })
 
     test('Should add new product to the cart and set new total price of the cart', async () => {
         const headerPage = new HeaderPage(page)
         const filterPage = new FilterPage(page)
-        const productTitle = await filterPage.productTitles.nth(0).textContent()
+        const productTitle = await filterPage.productTitles
         await filterPage.addToCartButtons.nth(0).click().then(async ()=>{
             await expect(await filterPage.addToCartButtons.nth(0)).toHaveAttribute('aria-label', 'В кошику')
         })
         await headerPage.cartButton.click()
         await delay(1000)
-        await expect((headerPage.cartItemTitles).nth(0)).toBeVisible()
-        await expect((headerPage.cartItemTitles).nth(0)).toHaveText(productTitle)
-        expect(parsePrice(headerPage.cartTotalPrice)).toEqual(parsePrice(await headerPage.cartItemPrices.nth(0)))
-    })
+        const cartItemTitles = await headerPage.cartItemTitles
+        await expect(cartItemTitles.nth(0)).toBeVisible()
+        await expect(cartItemTitles.nth(0)).toHaveText(productTitle[0])
+        expect(parsePrice(await headerPage.cartTotalPrice.textContent())).toEqual(parsePrice(await headerPage.cartItemPrices.nth(0).textContent()))
+})
 
     test('Should check Delete Cart Item button for being clickable', async () => {
         const headerPage = new HeaderPage(page)
@@ -62,9 +63,9 @@ test.describe('Add items to the basket', async() => {
         const filterPage = new FilterPage(page)
         await headerPage.cartCloseButton.click()
         await headerPage.catalogueMenu.click()
-        await page.locator('li.menu-categories__item').nth(2).hover()
+        await headerPage.catalogueItems.nth(2).hover()
         await page.getByRole('link', {name: 'PlayStation 5'}).first().click()
-        await page.locator('a.show-more').waitFor({state: 'visible'})
+        await filterPage.showMoreButton.waitFor({state: 'visible'})
         await delay(2000)
     })
 
@@ -76,7 +77,7 @@ test.describe('Add items to the basket', async() => {
         })
         await headerPage.cartButton.click()
         await delay(1000)
-        expect(await page.locator('.cart-product__price').all()).toHaveLength(2)
+        expect(await headerPage.cartItemPrices.all()).toHaveLength(2)
         const cartItemPrice = await page.locator('.cart-product__price').allInnerTexts().then((arr)=>{
             return arr.map((item)=>{
                 return parseFloat(item.replace(/\s/g, ''))
@@ -87,7 +88,7 @@ test.describe('Add items to the basket', async() => {
             })
         })
 
-        expect(await parsePrice(headerPage.cartTotalPrice)).toEqual(cartItemPrice)
+        expect(await parsePrice(await headerPage.cartTotalPrice.textContent())).toEqual(cartItemPrice)
     })
 
 })
